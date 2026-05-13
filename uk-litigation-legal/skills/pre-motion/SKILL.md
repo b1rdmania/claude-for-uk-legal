@@ -181,6 +181,16 @@ Stage 4 diffs the optimistic baseline against the adversarial findings. Produces
 
 [Concrete actions before the next case milestone: strengthen evidence, amend pleadings, settle, withdraw, brief counsel differently. One per scenario where applicable.]
 
+## Settlement-posture implications
+
+[One short section translating the failure-mode profile into settlement posture without re-implementing Nash bargaining. Examples:
+
+- "Several procedural failure modes ranked H — settlement posture should be more aggressive than the optimistic baseline suggests. Consider a Calderbank offer before issue."
+- "Substantive case strong; evidentiary risks moderate — settlement posture aligned with optimistic baseline, but recognise the counterparty has the leverage to demand a discount."
+- "Strategic failure modes dominate (information asymmetry, reputational exposure) — non-monetary settlement terms (confidentiality, mutual non-disparagement, agreed leaver narrative) may matter more than the headline number."
+
+This section is qualitative — it does not produce a number. Full BATNA / ZOPA / Nash analysis lives in the v0.2 `settlement-helper` skill.]
+
 ## Markers
 
 - `[SME VERIFY — failure mode]` — borderline adversary output, counsel call.
