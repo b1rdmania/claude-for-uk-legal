@@ -1,0 +1,8 @@
+{
+  "name": "uk-litigation-legal",
+  "version": "0.1.0",
+  "description": "UK civil litigation (England & Wales, CPR-aware). Builds chronologies with CPR 31.22 implied undertaking screen, drafts CPR-compliant letters before action, runs settlement analysis (Calderbank, Part 36), drafts without-prejudice correspondence, builds disclosure lists per Practice Direction 57AD.",
+  "author": {
+    "name": "b1rdmania"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "claude-for-uk-legal",
+  "owner": {
+    "name": "b1rdmania"
+  },
+  "plugins": [
+    {
+      "name": "uk-employment-legal",
+      "source": "./uk-employment-legal",
+      "description": "UK employment law (England & Wales). Drafts LBAs and Part 36 offers, runs unfair dismissal screens against the two-year qualifying period and day-one rights, preps ACAS early conciliation, drafts ET1 claims and settlement agreements with s.203 compliance.",
+      "author": {
+        "name": "b1rdmania"
+      }
+    },
+    {
+      "name": "uk-litigation-legal",
+      "source": "./uk-litigation-legal",
+      "description": "UK civil litigation (England & Wales, CPR-aware). Builds chronologies with CPR 31.22 implied undertaking screen, drafts CPR-compliant letters before action, runs settlement analysis (Calderbank, Part 36), drafts without-prejudice correspondence, builds disclosure lists per Practice Direction 57AD.",
+      "author": {
+        "name": "b1rdmania"
+      }
+    },
+    {
+      "name": "uk-research-legal",
+      "source": "./uk-research-legal",
+      "description": "UK legal research. Pulls judgments from the National Archives Find Case Law API, verifies citations against the official register, looks up primary legislation on legislation.gov.uk, surfaces Civil Procedure Rules and Practice Directions by reference.",
+      "author": {
+        "name": "b1rdmania"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "uk-employment-legal",
+  "version": "0.1.0",
+  "description": "UK employment law (England & Wales). Drafts LBAs and Part 36 offers, runs unfair dismissal screens against the two-year qualifying period and day-one rights, preps ACAS early conciliation, drafts ET1 claims and settlement agreements with s.203 compliance.",
+  "author": {
+    "name": "b1rdmania"
+  }
+}

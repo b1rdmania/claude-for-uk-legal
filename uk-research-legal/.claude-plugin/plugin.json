@@ -1,0 +1,8 @@
+{
+  "name": "uk-research-legal",
+  "version": "0.1.0",
+  "description": "UK legal research. Pulls judgments from the National Archives Find Case Law API, verifies citations against the official register, looks up primary legislation on legislation.gov.uk, surfaces Civil Procedure Rules and Practice Directions by reference.",
+  "author": {
+    "name": "b1rdmania"
+  }
+}
