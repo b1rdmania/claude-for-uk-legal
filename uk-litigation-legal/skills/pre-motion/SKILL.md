@@ -1,175 +1,202 @@
 ---
 name: pre-motion
-description: Runs a settlement analysis on a UK civil dispute using a Nash bargaining frame. Maps each side's BATNA (best alternative to a negotiated agreement), expected litigation cost-and-outcome, and risk tolerance to identify the zone of possible agreement, the Nash bargaining solution, and the optimal Part 36 / Calderbank strategy. Use when the user says "pre-motion", "settle this", "Nash analysis", "what should I offer", "zone of possible agreement", or wants a structured view on whether and how to settle.
-argument-hint: "[--mode=claimant|defendant|joint]"
+description: Runs an adversarial premortem on a UK litigation matter. Synthesises the lost version of the case and runs a structured multi-agent analysis on why it lost — procedural, substantive, evidentiary, strategic failure modes. Returns a stress-test brief with ranked failure scenarios, evidence inconsistencies, blind spots, mitigations, and one brutal one-sentence verdict. Use when the user wants to stress-test a case before issue, before settlement negotiations, before a litigation funder pitch, or before deciding whether to take a case. Triggers include "pre-motion", "stress-test this case", "where does this lose", "adversarial premortem", "premortem this litigation", "weakest version", "find the holes".
+argument-hint: "[--depth=fast|thorough]"
 ---
 
 # /pre-motion
 
-1. Elicit each side's inputs: claim value, expected costs to trial, probability of success on the merits, risk tolerance (utility curve), strategic preferences (precedent, reputation, deterrence).
-2. Compute BATNA for each side — the expected value of going to trial.
-3. Identify the ZOPA (zone of possible agreement) — the overlap between each side's reservation prices.
-4. Compute the Nash bargaining solution — the settlement point that maximises the product of each party's surplus over BATNA.
-5. Translate the result into a Part 36 / Calderbank offer recommendation.
-6. Output a one-page brief that names assumptions explicitly. The strength of the recommendation is bounded by the strength of the inputs — surface that.
+1. Load the matter context: facts, evidence references, claim heads, pleaded position, and the strongest version of the case as the user sees it.
+2. Run the adversarial pipeline:
+   - **Stage 1 — Optimistic Analyst.** The strongest version of the case the evidence supports.
+   - **Stage 2 — Evidence Inspector** (parent + three parallel sub-agents: document review, cross-reference, chronology). Returns merged evidence flags with severity.
+   - **Stage 3 — Premortem Adversary** (parent + four parallel Opus sub-agents: procedural, substantive, evidentiary, strategic). Each instructed: "It is [trial date + 1 year]. The case has been LOST. Walk back." Returns ranked failure scenarios per category.
+   - **Stage 4 — Synthesiser.** Diffs the optimistic case against the adversarial findings.
+3. Output: verdict (steelman / borderline / strawman), ranked failure scenarios, evidence inconsistencies, blind spots, mitigations, and the one brutal sentence: "if we lose this, this will be why."
 
 ---
 
-# Pre-motion: structured settlement analysis
+# Pre-Motion — adversarial premortem for UK litigation
 
 ## Purpose
 
-Most cases settle. The question is at what number and on what terms. A structured analysis turns gut-feel negotiation into a defensible model that:
+You think you've built the strongest version of your case. Pre-Motion runs it through a structured adversarial pipeline to find where it actually loses — the procedural, substantive, evidentiary, and strategic failure modes opposing counsel will pull on first.
 
-- Tests whether the case should settle at all (sometimes BATNAs don't overlap and trial is rational).
-- Identifies the range within which both sides should be willing to settle.
-- Suggests a focal point (the Nash solution).
-- Times offers around CPR Part 36 to maximise costs pressure.
+The opposite of confirmation bias. The opposite of optimistic case theory. By design.
 
-This is not a substitute for judgment. It is a structured way to challenge it.
+For: solicitors stress-testing before issue, in-house counsel before signing off, mediators evaluating settlement value, litigation funders pricing a matter, anyone deciding whether to take a case.
+
+## Architecture
+
+```
+Orchestrator
+│
+├── Stage 1 · Optimistic Analyst                  (single agent — Sonnet)
+│     The strongest version of the case the evidence supports.
+│
+├── Stage 2 · Evidence Inspector                  (parent + 3 parallel sub-agents — Sonnet)
+│     ├── Document review sub-agent
+│     ├── Cross-reference sub-agent
+│     └── Chronology sub-agent
+│     Output: merged evidence flags with severity.
+│
+├── Stage 3 · Premortem Adversary                 (parent + 4 parallel sub-agents — Opus)
+│     ├── Procedural sub-agent
+│     ├── Substantive sub-agent
+│     ├── Evidentiary sub-agent
+│     └── Strategic sub-agent
+│     Each instructed: "It is [date]. The case has been LOST. Walk back."
+│     Output: ranked failure scenarios per category.
+│
+└── Stage 4 · Synthesiser                         (single agent — Sonnet)
+      Diffs the optimistic case against the adversarial findings.
+      Produces the brief.
+```
+
+Seven LLM calls under the hood. Two parallel `asyncio.gather` blocks (Stage 2 sub-agents, Stage 3 sub-agents). End-to-end runtime ~2-3 minutes on a real case at `--depth=thorough`; ~30 seconds at `--depth=fast` (Stage 3 runs Sonnet instead of Opus).
 
 ## Inputs
 
-For each side, gather:
+- Matter facts: parties, brief chronology, claim heads, jurisdiction, forum.
+- Evidence references: documents, witness statements, expert reports — pointers to matter content, not re-uploaded.
+- The strongest version of the case as the user sees it (the optimistic baseline).
+- Optional: counterparty's pleaded defence or anticipated defence.
+- Optional: depth flag (`--depth=fast` for ~30s preview; `--depth=thorough` for the full ~3min run).
 
-| Input | Notes |
-|---|---|
-| Claim value (V) | Quantum if claimant wins on all heads. Best-case for claimant. |
-| Probability of success on liability (Pl) | 0–1 |
-| Probability of success on quantum given liability (Pq) | 0–1, often distinct from liability |
-| Discounted recovery (R) | V × Pl × Pq — expected recovery at trial before costs |
-| Costs to trial (C) | Own-side legal spend through trial |
-| Costs at risk (Crisk) | Other-side costs they would pay if they lose (CPR 44 standard or indemnity) |
-| Time to trial (T) | Months — affects discounting and management cost |
-| Risk tolerance (ρ) | Subjective: 0 = risk-neutral, 1 = highly risk-averse. Drives the discount on the gamble. |
-| Strategic value (S) | Precedent, reputation, deterrence, regulator signal — qualitative, surfaced not quantified |
+## Failure-mode categories
 
-## BATNA computation
+The four Stage 3 sub-agents specialise in the four ways UK civil cases lose.
 
-### Claimant BATNA
-`BATNA_C = (V × Pl × Pq) − C_C + (Pl × Pq) × C_D − (1 − Pl × Pq) × C_D_atrisk − ρ_C × σ`
+### Procedural
 
-Plain English:
-- Claimant expects to recover V × Pl × Pq.
-- Less own costs C_C.
-- Plus, if they win, recovery of defendant's costs (assumed standard-basis recovery — discount by recoverability factor, often 60-70% of incurred costs).
-- Less, if they lose, defendant's costs paid out.
-- Less a risk-aversion premium ρ × σ, where σ is the standard deviation of the outcome.
+- Limitation expired or contested (Limitation Act 1980, s.5 / s.11 / s.14A).
+- Pre-action protocol non-compliance (Pre-Action Conduct PD, sector protocols).
+- Strike-out or summary judgment vulnerability (CPR 3.4, CPR 24).
+- Costs sanctions risk (CPR 44.2).
+- ADR refusal exposure (Halsey, Churchill v Merthyr Tydfil [2023]).
+- Service / jurisdiction defects (CPR 6).
+- Disclosure-regime missteps (CPR 31 vs PD 57AD).
 
-### Defendant BATNA
-`BATNA_D = − (V × Pl × Pq) − C_D + (1 − Pl × Pq) × C_C_recovery − (Pl × Pq) × C_C − ρ_D × σ`
+### Substantive
 
-(Negative — defendant expects to pay.)
+- Cause-of-action elements unproven.
+- Causation gaps (factual or legal — *Wagon Mound*, *Fairchild*, *SAAMCO*).
+- Mitigation failures (*British Westinghouse*).
+- Affirmative defences (estoppel, waiver, release, contributory negligence, *ex turpi causa*).
+- Statutory bars (Consumer Rights Act, UCTA, statutory limitation).
 
-### Reservation prices
+### Evidentiary
 
-- **Claimant's reservation price** = lowest settlement they should accept = BATNA_C (in cash today, no discount).
-- **Defendant's reservation price** = highest settlement they should pay = −BATNA_D.
+- Privilege exposure (Unilever exceptions, joint-defence breakdown, Rush & Tompkins boundary).
+- Disclosure failures and adverse-inference risk (CPR 31, PD 57AD).
+- Witness credibility / availability / inconsistency.
+- Hearsay weaknesses (Civil Evidence Act 1995 s.2-4 notice failures).
+- Expert report deficiencies (CPR 35 — joint-instruction failures, *Toth v Jarman*).
+- Document authenticity / chain of custody.
 
-ZOPA exists if claimant's reservation ≤ defendant's reservation.
+### Strategic
 
-## Nash bargaining solution
-
-Where ZOPA exists, the Nash solution is the settlement S that maximises:
-
-`(S − BATNA_C) × (−BATNA_D − S)`
-
-Differentiate, set to zero:
-
-`S_Nash = (BATNA_C + (−BATNA_D)) / 2`
-
-i.e. the midpoint of the ZOPA. This is the symmetric Nash solution. Asymmetric weights (relative bargaining power, urgency, asymmetric information) shift the solution toward the stronger party.
-
-## Strategic overlay
-
-Pure expected-value analysis ignores three things that matter:
-
-1. **Precedent / reputation.** A defendant who settles every weak claim invites more. A claimant who never settles teaches respondents not to negotiate. Adjust the implied future cost.
-2. **Information asymmetry.** A confident party may signal by going low (Part 36) and forcing the other side to read confidence. The signal value is part of the offer's price.
-3. **Time and management cost.** Litigation costs more than the legal spend — management time, distraction, document burden. Larger for SMEs than for institutional litigants.
-
-## Part 36 / Calderbank timing
-
-Once Nash is computed, translate into a costs-protected offer:
-
-- **Claimant offer to settle** at a number ≤ Nash + a margin. If beaten at trial, claimant gets enhanced interest, indemnity costs from end of relevant period, and the s.36.17 additional amount.
-- **Defendant offer to settle** at a number ≥ Nash − a margin. If claimant fails to beat it at trial, defendant gets costs from end of relevant period.
-
-Time the offer to expire just before a key cost event (witness statements, expert reports, trial bundle) to maximise the perceived cost of refusal.
-
-In the **Employment Tribunal**, Part 36 does not apply. Use ACAS COT3 (if ACAS is involved) or Calderbank — but expect weaker costs consequences under ETR 2013 rule 76. See `part-36-offer` skill.
+- Settlement leverage misjudged (BATNA gap to opposing side).
+- Costs/benefit ratio misaligned with client objectives.
+- Reputational / regulatory exposure from issue or trial.
+- Information asymmetry working against the client.
+- Counterparty's BATNA stronger than the optimistic baseline assumes.
 
 ## Workflow
 
-### Step 1 — Elicit inputs
-Walk through the table. Where the user does not know an input, give a default range and flag the sensitivity.
+### Step 1 — CPR 31.22 + privilege gate
 
-### Step 2 — Compute BATNAs
-Show working.
+Pre-Motion reads matter documents to build the optimistic baseline and stress-test evidence. If documents are from disclosure in current proceedings, the matter slug must match the proceedings reference (recorded on the matter). If from disclosure in *different* proceedings, refuse until permission, agreement, or open-court reference is established.
 
-### Step 3 — Test for ZOPA
-If none, surface honestly. Recommend trial preparation, not settlement.
+Privilege posture also applies: a `C_paused` matter refuses Pre-Motion entirely. A `B_mixed` matter runs but the output includes a `[PRIVILEGE FLAGGED]` banner and recommends counsel review before any external distribution.
 
-### Step 4 — Compute Nash
-Symmetric first. Then asymmetric overlay if bargaining power is uneven.
+### Step 2 — Optimistic baseline
 
-### Step 5 — Sensitivity
-Vary the most uncertain input (usually Pl) by ±20%. Show how the Nash moves. The recommendation is only as strong as the inputs.
+Stage 1 reads the matter facts and evidence references and builds the strongest version of the case. This becomes the foil for Stages 2 and 3.
 
-### Step 6 — Translate to offer
-Specific number, vehicle, timing, deadline.
+### Step 3 — Evidence inspection (parallel)
 
-## Output template
+Three sub-agents in parallel:
+- Document review: gaps, inconsistencies, weak documents.
+- Cross-reference: claims in one document contradicted by another.
+- Chronology: timeline gaps, dates that don't fit, missing events.
 
-# Pre-motion settlement analysis — [Case ref]
+Merged into a single evidence-flags list with severity per flag.
 
-## Assumptions
+### Step 4 — Premortem adversary (parallel)
 
-| Parameter | Claimant view | Defendant view | Used in model | Confidence |
-|---|---|---|---|---|
-| Claim value | £[X] | £[X'] | £[mid] | H/M/L |
-| P(liability) | [%] | [%] | [%] | |
-| P(quantum) | [%] | [%] | [%] | |
-| Costs to trial (C) | £[...] | £[...] | | |
-| Time to trial | [months] | | | |
+Four sub-agents in parallel, each in its category. Each is given the same setup prompt: *"It is [trial date + 1 year]. The case described above has been LOST. Walk back: what failure modes in your category caused the loss?"*
 
-## BATNAs
+Each returns ranked failure scenarios with severity and likelihood. Sub-agent prompts incorporate the relevant authority for the category (CPR rules for procedural; substantive law citations for substantive; etc.).
 
-- Claimant BATNA: £[X]
-- Defendant BATNA: −£[Y]
+### Step 5 — Synthesise
 
-## ZOPA
+Stage 4 diffs the optimistic baseline against the adversarial findings. Produces the brief with verdict, ranked scenarios, evidence inconsistencies, blind spots, mitigations, and the one brutal sentence.
 
-[Yes / No]. Range: £[low] – £[high].
+## Output
 
-## Nash solution
+```
+[Reviewer note: work product, prepared in contemplation of litigation, subject to litigation privilege.]
 
-**£[N]** (midpoint of ZOPA).
+# Pre-Motion brief — [Matter name]
 
-Sensitivity:
-- P(liability) +20%: Nash → £[N']
-- P(liability) −20%: Nash → £[N'']
-- Costs +50%: Nash → £[N''']
+**Date generated:** [YYYY-MM-DD]
+**Depth:** fast | thorough
+**Privilege posture:** A_cleared | B_mixed | C_paused
+**Verdict:** [Steelman | Borderline | Strawman]
 
-## Recommended offer
+## The one brutal sentence
 
-[Claimant side: open settlement discussions at £[high end], real Part 36 at £[Nash + margin], deadline aligned to [event].]
+"If we lose this, this will be why: [single sentence]"
 
-[Defendant side: open at £[low end], real Part 36 at £[Nash − margin] timed to expire before [event].]
+## Optimistic baseline
 
-## Strategic flags
+[The strongest version of the case, as Stage 1 built it.]
 
-- [Precedent / reputational considerations.]
-- [Information asymmetry.]
-- [Time cost.]
+## Ranked failure scenarios
+
+### Procedural
+1. [Scenario, one paragraph.] Severity: H/M/L. Likelihood: H/M/L. Mitigation: [...]
+2. [...]
+3. [...]
+
+### Substantive
+1. [...]
+
+### Evidentiary
+1. [...]
+
+### Strategic
+1. [...]
+
+## Evidence inconsistencies
+
+[Flagged by Stage 2.]
+
+## Blind spots
+
+[Issues the optimistic baseline assumed resolved that Stage 3 found unresolved.]
+
+## Mitigations
+
+[Concrete actions before the next case milestone: strengthen evidence, amend pleadings, settle, withdraw, brief counsel differently. One per scenario where applicable.]
 
 ## Markers
-- `[ASSUMPTION — verify P(liability) — biggest sensitivity]`
-- `[SME VERIFY — costs recovery percentage under CPR 44]`
+
+- `[SME VERIFY — failure mode]` — borderline adversary output, counsel call.
+- `[CITE NEEDED — [authority]]` — adversary referenced a rule or doctrine without specifying section / case.
+- `[EVIDENCE FLAG — severity]` — Stage 2 surfaced; verify against the source document.
+```
 
 ## What this skill does not do
 
-- Replace counsel's judgment on prospects. The probabilities are inputs, not outputs.
-- Run a real Monte Carlo (it computes deterministic ZOPA + sensitivity, which is usually enough).
-- Apply in the Employment Tribunal where Part 36 doesn't run — see `part-36-offer` for ET-specific vehicles.
-- Handle multi-party settlements with complex contribution dynamics (handle bilaterally; flag contribution claims separately).
+- Predict the outcome. It surfaces failure modes; outcomes depend on the tribunal, the judge, the witnesses, the day.
+- Take the case for you. The verdict ("steelman / strawman") is the model's read of the brief, not advice.
+- Replace counsel's strategic call. Settle, withdraw, strengthen — all counsel decisions.
+- Cover non-UK procedure (US federal, Scotland, NI).
+- Run real-time during trial. This is pre-action, pre-settlement, or pre-funding use.
+- Replace formal counsel opinion. A KC's view on a case strength matters more than this output. Pre-Motion is a structured prompt for that conversation, not a substitute.
+
+## v0.2 roadmap
+
+A separate `settlement-helper` skill ships in v0.2 covering Calderbank / Part 36 mechanics, BATNA / ZOPA / Nash bargaining analysis — the things originally scoped into Pre-Motion that belong in their own surface.
