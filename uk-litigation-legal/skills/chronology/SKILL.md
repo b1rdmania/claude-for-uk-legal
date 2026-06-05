@@ -1,12 +1,12 @@
 ---
 name: chronology
-description: Builds a UK civil litigation chronology from declared sources, with the CPR 31.22 implied undertaking screen on disclosed documents, source attribution per entry, and case-theory significance tagging. Use when the user asks to build a chronology or timeline from a disclosure bundle, a matter file, or witness statements, or says "build the chron", "what happened when", or needs a Statement of Facts ready timeline.
+description: Builds a UK civil litigation chronology from declared sources, with a CPR 31.22 implied-undertaking check on disclosed documents, source attribution per entry, and case-theory significance tagging. Use when the user asks to build a chronology or timeline from a disclosure bundle, a matter file, or witness statements, or says "build the chron", "what happened when", or needs a Statement of Facts ready timeline.
 argument-hint: "[slug] [--format=working|sof|witness-[name]]"
 ---
 
 # /chronology
 
-1. Run the CPR 31.22 implied undertaking gate before extracting from disclosed documents.
+1. Run the CPR 31.22 implied-undertaking check before extracting from disclosed documents.
 2. Identify sources: user-provided paths, matter folder, declared sources.
 3. Extract dated events, de-duplicate against sources, tag significance per case theory.
 4. Output a working chronology by default; Statement-of-Facts or witness-specific variants on request.
@@ -15,7 +15,9 @@ argument-hint: "[slug] [--format=working|sof|witness-[name]]"
 
 # Chronology — UK civil litigation
 
-## CPR 31.22 implied undertaking gate (unbypassable)
+## CPR 31.22 implied-undertaking check
+
+The host workspace enforces the hard gate (matter-slug match against the proceedings reference, privilege posture). If this skill is running, that gate has already passed — this check does not replace it. The skill still performs its own check below and refuses or flags if misuse is indicated; it is not the enforcement.
 
 Before building from any document obtained through standard or extended disclosure in English / Welsh proceedings, confirm the use is permitted:
 
@@ -30,7 +32,7 @@ Confirm before extracting from any source that may have come through disclosure:
 - Whether the documents are from disclosure in current proceedings (infer from source path or matter context; surface for confirmation if not evident).
 - Whether the chronology is being built for use in those same proceedings (default assumption: yes — same matter slug, same proceedings).
 
-If the answer indicates "different proceedings" or "external use", **stop** until permission, agreement, or open-court reference is established. Flag prominently in the output header: `CPR 31.22 — use restricted to current proceedings unless permitted, agreed, or read in open court.`
+If the answer indicates "different proceedings" or "external use", refuse to build until permission, the parties' agreement, or open-court reference is established — the implied undertaking would otherwise be breached. Flag prominently in the output header: `CPR 31.22 — use restricted to current proceedings unless permitted, agreed, or read in open court.`
 
 Equivalent overlay in disclosure pilot / PD 57AD jurisdictions (Business and Property Courts): the implied undertaking applies; PD 57AD does not displace it.
 
@@ -52,7 +54,7 @@ Determine the privilege posture before extracting. Infer from source type (clear
 
 ## Workflow
 
-### Step 1 — CPR 31.22 gate (above)
+### Step 1 — CPR 31.22 implied-undertaking check (above)
 
 ### Step 2 — Privilege posture choice (above)
 
@@ -86,7 +88,22 @@ Working chronology by default. Variants:
 - **Statement of Facts (SoF)**: filtered to 🔴 and select 🟡, prose narrative, with disclosure references. Privilege-flagged entries excluded by default.
 - **Witness-specific**: filtered to events where the named witness is sender, recipient, attendee, or subject.
 
-## Output template
+## Output
+
+Produce the chronology with the sections below. Render this as the finished chronology — do not echo this template back, do not leave `[placeholder]` markers or emoji-count scaffolding in the output, and do not invent events to fill rows. Attribute every entry to its source document; if a section has nothing in it, say so.
+
+This is a draft for solicitor review, not legal advice. The chronology and its significance tags are a first pass; counsel decides what goes into a pleading or before the court.
+
+The sections:
+
+- A reviewer-note line: *work product, prepared in contemplation of litigation, subject to litigation privilege.*
+- A CPR 31.22 notice naming the proceedings the sources were disclosed in.
+- A header: matter slug, build date, case theory, pivot fact, side framing, privilege posture, source count, and entry count by tag.
+- The timeline table — one row per de-duplicated event, with date, event, significance tag, privilege flag, and sources.
+- Key events (🔴) — the events that move a factfinder, each with what happened, the tie to the case theory, and sources.
+- Gaps — date ranges with no events, expected-but-missing events, unreadable sources.
+
+Worked shape for the sections (do not copy the placeholder text — fill from real sources):
 
 [Reviewer note: work product, prepared in contemplation of litigation, subject to litigation privilege.]
 

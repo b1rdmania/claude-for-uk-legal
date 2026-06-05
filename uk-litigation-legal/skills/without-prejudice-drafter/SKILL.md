@@ -1,6 +1,6 @@
 ---
 name: without-prejudice-drafter
-description: Drafts correspondence on the correct privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open. Distinguishes the three, applies them correctly, and surfaces the exceptions to WP protection that frequently catch parties out (Unilever v Procter & Gamble exceptions). Use when the user asks to draft a WP letter, a Calderbank, a settlement letter, or wants to know whether material is protected from disclosure.
+description: Drafts correspondence on the intended privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open — and flags the risk that the footing may not hold. Distinguishes the three, proposes the right one for the situation, and surfaces the exceptions to WP protection that frequently catch parties out (Unilever v Procter & Gamble exceptions). Use when the user asks to draft a WP letter, a Calderbank, a settlement letter, or wants to know whether material is likely protected from disclosure.
 argument-hint: "[--type=wp|wpsatc|open]"
 ---
 
@@ -21,7 +21,9 @@ argument-hint: "[--type=wp|wpsatc|open]"
 |---|---|---|
 | **Open** | Yes — fully admissible | Statements of case, demands, pre-action letters not yet in negotiation |
 | **Without prejudice (WP)** | No — inadmissible to prove liability or quantum | Genuine settlement negotiations |
-| **Without prejudice save as to costs (WPSATC) / Calderbank** | Inadmissible on liability/quantum; **admissible on costs** after judgment | Settlement offers where the offeror wants costs protection but cannot use CPR Part 36 (e.g. Employment Tribunal) or wants Calderbank flexibility |
+| **Without prejudice save as to costs (WPSATC) / Calderbank** | Inadmissible on liability/quantum; intended to be **admissible on costs** after judgment | Settlement offers where the offeror wants costs protection but cannot use CPR Part 36 (e.g. Employment Tribunal) or wants Calderbank flexibility |
+
+Labelling a letter WPSATC signals the intended footing; it does not by itself secure costs protection. Whether the court reads the letter on costs, and what weight it gives it, is a matter for the court's discretion (CPR 44.2) on the facts. The footing is a proposal, not a guarantee.
 
 ## When WP protection applies
 
@@ -31,11 +33,11 @@ Three conditions:
 2. The communication is **a genuine attempt to settle** that dispute.
 3. The parties intended the communication to be confidential.
 
-A letter labelled "without prejudice" that does not satisfy these conditions is not protected. A letter that satisfies them but is not labelled is still protected (the label is evidence of intention; substance prevails — Rush & Tompkins v GLC [1989]).
+A letter labelled "without prejudice" that does not satisfy these conditions is not protected. A letter that satisfies them but is not labelled is still protected — the label is evidence of intention, but substance prevails `[CITE NEEDED — Rush & Tompkins v GLC [1989], verify proposition before relying]`.
 
 ## The Unilever exceptions (Unilever v Procter & Gamble [2000])
 
-WP protection is not absolute. The court has admitted WP material in evidence where:
+WP protection is not absolute. `[CITE NEEDED — Unilever v Procter & Gamble [2000] EWCA Civ 11; verify the exception list and its current scope before relying — the categories below are illustrative, not a closed or settled set, and the courts have treated them as fact-sensitive.]` The court has admitted WP material in evidence in situations including the following. Do not over-extend these; treat anything outside a squarely-decided category as `[CITE NEEDED]` rather than asserting protection is lost:
 
 1. The WP communications show the agreement was concluded — to prove or rebut existence/terms of the agreement.
 2. The communications are evidence of misrepresentation, fraud, or undue influence.
@@ -45,13 +47,13 @@ WP protection is not absolute. The court has admitted WP material in evidence wh
 6. The communications are relevant to costs (only if WPSATC was the footing).
 7. The communications include a tariff or formula relevant to determining a related issue.
 
-A letter discussing a settlement that also makes a threat or admits a crime is exposed under (4). Practical implication: WP is not a magic shield. Don't write anything you'd be embarrassed by if a judge reads it.
+A letter discussing a settlement that also makes a threat or admits a crime is exposed under (4). Practical implication: WP is not a magic shield. Labelling a letter does not make it privileged, and even a properly-footed letter can be admitted under an exception. Don't write anything you'd be embarrassed by if a judge reads it, and don't promise the client the letter is "safe" — the footing can fail.
 
 ## Calderbank / WPSATC specifics
 
-The Calderbank offer (Calderbank v Calderbank [1976]) lets a party put a settlement on the table that the court will see on costs at the end. Mostly displaced by CPR Part 36 in the civil courts, but still alive where:
+The Calderbank offer `[CITE NEEDED — Calderbank v Calderbank [1976] Fam 93; verify before relying]` lets a party put a settlement on the table that the court will see on costs at the end. Mostly displaced by CPR Part 36 in the civil courts, but still alive where:
 
-- The forum doesn't have Part 36 (Employment Tribunal — see `part-36-offer`).
+- The forum doesn't have Part 36 (Employment Tribunal — use a Calderbank / WPSATC offer instead).
 - The offer is on terms Part 36 cannot accommodate (mixed money and non-money relief; offers including a contribution; offers conditional on third-party action).
 - The offeror wants to avoid the strictures of Part 36 formality.
 
@@ -65,7 +67,7 @@ Calderbank cost consequences in the civil courts are weaker than Part 36 — the
 4. **Settlement substance**: state clearly that the letter is part of a genuine attempt to settle the [described dispute].
 5. **Authority**: a WP offer should be authorised by the client and confirm the lawyer has authority to bind on those terms (or expressly state subject-to-client-approval).
 6. **Acceptance mechanics**: how is acceptance communicated; how long is the offer open; what happens if not accepted.
-7. **Costs reservation (WPSATC only)**: expressly reserve the right to refer to the letter on costs.
+7. **Costs reservation (WPSATC only)**: expressly reserve the right to refer to the letter on costs. The reservation states the intended footing; it does not bind the court, which retains discretion under CPR 44.2.
 
 ## Workflow
 
@@ -87,9 +89,13 @@ Use the appropriate template. Keep separate from any open correspondence going o
 
 Flag any content that risks an Unilever exception (admissions, threats, signals of estoppel).
 
-## Output templates
+## Output
 
-### Without Prejudice
+Produce the finished letter, not the template. Each section below is content to PRODUCE — render it as the completed correspondence, fully drafted on the chosen footing. Do not echo the template skeleton back to the user, and do not fabricate facts to fill a placeholder: for any value you don't have (sums, dates, party names, dispute description), insert `[SOLICITOR: confirm X]` rather than guessing. The placeholders below (£[X], [21] days, [brief description]) mark exactly the spots that must be confirmed, not copied verbatim.
+
+The two structures below are the WP and WPSATC variants. Pick the one matching the confirmed footing and render only that.
+
+### Without Prejudice — sections to produce
 
 **WITHOUT PREJUDICE**
 
@@ -114,7 +120,7 @@ Yours faithfully,
 
 [Signature]
 
-### Without Prejudice Save As To Costs
+### Without Prejudice Save As To Costs — sections to produce
 
 **WITHOUT PREJUDICE SAVE AS TO COSTS**
 
@@ -147,6 +153,8 @@ Yours faithfully,
 
 ## What this skill does not do
 
-- Make a labelled letter privileged that isn't substantively a settlement attempt.
-- Provide costs-protection equivalent to Part 36 in the civil courts. For that, use `part-36-offer`.
+- Give legal advice or settle the privilege footing. This produces a draft for a solicitor to review, not advice the client can rely on. The footing it proposes is exactly that — a proposal. Counsel or the conducting solicitor must confirm it before the letter is sent, because mischaracterising a letter's footing has real disclosure consequences: an offer the client believed was protected can end up admissible, and open material wrongly treated as WP can frustrate the client's own case.
+- Make a labelled letter privileged that isn't substantively a settlement attempt. The label follows the substance, not the other way round.
+- Guarantee the footing holds. WP protection can fail (see the Unilever exceptions), and WPSATC costs treatment is at the court's discretion under CPR 44.2.
+- Provide costs-protection equivalent to Part 36 in the civil courts — draft a CPR Part 36 offer separately for that.
 - Cover Scottish "tenders" or NI equivalents.

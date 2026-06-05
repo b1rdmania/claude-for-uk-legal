@@ -1,6 +1,6 @@
 ---
 name: cpr-letter-drafter
-description: Drafts a Letter Before Claim (England & Wales) compliant with the Practice Direction on Pre-Action Conduct and Protocols, or with a sector-specific pre-action protocol where one applies (debt, professional negligence, housing disrepair, personal injury, etc.). Use when the user says "draft an LBC", "letter before claim", "pre-action letter", "pre-action protocol", or needs to start the pre-action clock before issuing a civil claim.
+description: Drafts a Letter Before Claim (England & Wales) styled to follow the Practice Direction on Pre-Action Conduct and Protocols, or a sector-specific pre-action protocol where one applies (debt, professional negligence, housing disrepair, personal injury, etc.) — verify compliance against the current protocol before sending. Use when the user says "draft an LBC", "letter before claim", "pre-action letter", "pre-action protocol", or needs to start the pre-action clock before issuing a civil claim.
 argument-hint: "[--protocol=auto|pacc|debt|prof-neg|disrepair|pi|other]"
 ---
 
@@ -76,11 +76,19 @@ The pre-action regime narrows issues, encourages settlement, and exposes parties
 
 ## Limitation gate
 
-Most contract and tort claims: 6 years (Limitation Act 1980 s.5, s.2). Personal injury: 3 years (s.11). Latent damage: special rules (s.14A — 3 years from knowledge / 15-year long-stop). Judicial review: promptly and in any event within 3 months (CPR 54.5). Defamation: 1 year (s.4A). 
+These are **general defaults only** — the periods below are starting points, not a settled limitation opinion. The accrual date and any exceptions must be checked by a solicitor for the specific facts.
+
+- Most contract and tort claims: 6 years (Limitation Act 1980 s.5, s.2).
+- Personal injury: 3 years (s.11).
+- Latent damage: special rules (s.14A — 3 years from knowledge / 15-year long-stop).
+- Judicial review: promptly and in any event within 3 months (CPR 54.5).
+- Defamation: 1 year (s.4A).
+
+Do **not** state a computed latest-issue date as fact. Exceptions and adjustments that move the date — s.32 deliberate concealment/fraud/mistake, s.14A date of knowledge, contractual variation of the limitation period, contribution claims (s.10), disability, acknowledgment/part payment (s.29) — must be checked by a solicitor before anyone relies on the date.
 
 The LBC does **not** stop limitation. If limitation is near, issue protectively and consider a stay for pre-action compliance.
 
-Surface inline: `[LIMITATION — primary limit expires [date]; consider protective issue]`.
+Surface the computed date as something to confirm, never assert: `[SOLICITOR: confirm limitation date — primary limit appears to expire [date]; check accrual + exceptions; consider protective issue]`.
 
 ## Workflow
 
@@ -88,7 +96,7 @@ Surface inline: `[LIMITATION — primary limit expires [date]; consider protecti
 From the claim type. If unclear, default to PACC.
 
 ### Step 2 — Limitation check
-Surface the latest issue date.
+Surface the apparent latest issue date as a `[SOLICITOR: confirm limitation date]` marker — never as a settled fact. Flag the accrual assumption and any exception that could move it.
 
 ### Step 3 — Draft per protocol
 Use the relevant template.
@@ -97,9 +105,11 @@ Use the relevant template.
 Identify documents to enclose. Limited disclosure at LBC stage; full disclosure later.
 
 ### Step 5 — ADR signal
-PACC and most protocols require parties to consider ADR. Stating willingness in the LBC is standard. Refusal to engage in ADR can be costs-penalised (Halsey v Milton Keynes NHS Trust [2004]; further calibrated in Churchill v Merthyr Tydfil [2023] — court may order ADR).
+PACC and most protocols require parties to consider ADR. Stating willingness in the LBC is standard. Refusal to engage in ADR can be costs-penalised (Halsey v Milton Keynes NHS Trust `[CITE NEEDED — authority]`; the position was further calibrated so the court may now order ADR, Churchill v Merthyr Tydfil `[CITE NEEDED — authority]`). Verify both citations and the current ADR-costs position before relying on them.
 
 ## Output template (PACC default)
+
+Render the sections below as the finished letter — do not echo this template back, and do not leave bracketed placeholders unfilled. If a value is unknown, insert a clearly-marked `[SOLICITOR: confirm X]` rather than guessing. Any case-law or rule reference the model cannot pin to a section or citation should be marked `[CITE NEEDED — authority]` rather than stated as settled.
 
 [Solicitor letterhead]
 
@@ -116,7 +126,7 @@ Dear Sirs,
 
 We act for [Claimant]. We are writing in accordance with the Practice Direction — Pre-Action Conduct and Protocols [or the relevant protocol].
 
-**Limitation notice:** The primary limitation period for the claim described below expires on [date].
+**Limitation notice:** The primary limitation period for the claim described below appears to expire on `[SOLICITOR: confirm limitation date]`.
 
 ## 1. The parties
 
@@ -166,7 +176,7 @@ Please provide a Letter of Response within [21 days / per protocol]. The respons
 
 ## 8. Costs
 
-If proceedings are issued and our client succeeds, costs will be sought under CPR Part 44. Our client reserves the right to make a CPR Part 36 offer at any stage.
+If proceedings are issued and our client succeeds, costs will be sought under CPR Part 44. Our client reserves the right to make a CPR Part 36 offer, or a without-prejudice-save-as-to-costs (Calderbank `[CITE NEEDED — authority]`) offer, at any stage.
 
 Yours faithfully,
 
@@ -174,12 +184,17 @@ Yours faithfully,
 
 ## Markers
 
-- `[LIMITATION — issue by [date]]`
+- `[SOLICITOR: confirm limitation date]` — the computed latest-issue date; always confirm, never assert.
 - `[PROTOCOL — [name] applies; consider preliminary notice / 30-day debt window / 3-month prof-neg response]`
-- `[SME VERIFY — protocol amendments]`
+- `[SME VERIFY — protocol amendments]` — protocol wording or timing the model is unsure is current.
+- `[CITE NEEDED — authority]` — a case or rule referenced without a verified citation; check before relying on it.
 
 ## What this skill does not do
 
 - Issue the claim. The LBC is pre-action.
 - Apply Scottish / NI procedure.
 - Replace counsel's call on whether to issue protectively where limitation is tight.
+- Guarantee or enforce compliance. The output is styled to follow the PACC or the relevant protocol; it does not certify that the letter is compliant. Verify the current protocol's content, timing, and enclosure requirements before sending.
+- Settle the limitation position. The periods in this skill are general defaults; the accrual date and exceptions must be checked by a solicitor.
+
+This is a draft for solicitor review, not legal advice. Verify every citation and the limitation position with counsel before the letter is sent. A solicitor with conduct of the matter — not this prompt — is responsible for compliance and for what goes out under the firm's name.

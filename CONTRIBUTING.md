@@ -9,7 +9,7 @@ This project is a set of UK-jurisdiction plugins for Claude that produce drafts 
 1. **No invented law.** Every legal assertion in a SKILL.md must be traceable to a statute, rule, practice direction, or named authority. Generic "lawyers usually do X" is not enough.
 2. **Cite the source.** Statutes by short title and section. Rules by CPR Part and rule number. Cases by neutral citation (or pre-2001 reporter). Practice directions by number.
 3. **Solicitor in the loop is the design assumption.** Skills produce drafts. Skills do not produce final deliverables. Don't soften this.
-4. **Time-limit gates and privilege gates are unbypassable.** If you touch a skill that has one, the gate stays.
+4. **Keep the safety checks honest.** The hard CPR 31.22 / privilege / time-limit gate is enforced by the host workspace, not by a prompt. If you touch a skill that performs one of these checks, keep the check — and keep it honest: don't remove it, and don't claim the prompt itself enforces or guarantees it.
 5. **No hallucinated authority.** If you don't know the citation, mark `[CITE NEEDED]`. Don't fabricate one.
 
 ## What we particularly want
@@ -50,7 +50,7 @@ argument-hint: "[args]"
 
 ## Workflow
 
-## Output template
+## Output
 
 ## Markers
 

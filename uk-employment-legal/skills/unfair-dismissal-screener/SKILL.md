@@ -1,17 +1,21 @@
 ---
 name: unfair-dismissal-screener
-description: Screens a proposed dismissal or an alleged unfair dismissal against the s.94 ERA framework for England & Wales. Tests qualifying service, identifies automatically unfair categories (no qualifying period), applies the Burchell, Polkey, and band-of-reasonable-responses tests, and surfaces specific procedural risks. Use when the user says "is this unfair", "screen this dismissal", "ordinary unfair dismissal", "automatic unfair dismissal", or wants a fairness assessment before or after dismissal.
+description: Screens a proposed dismissal or an alleged unfair dismissal against the s.94 ERA framework for England & Wales. Structures the qualifying-service question, the automatically-unfair categories (no qualifying period), and a Burchell / Polkey / band-of-reasonable-responses analysis for a solicitor to verify — it does not determine fairness. Surfaces specific procedural risks. Use when the user says "is this unfair", "screen this dismissal", "ordinary unfair dismissal", "automatic unfair dismissal", or wants a structured fairness review before or after dismissal.
 argument-hint: "[--mode=pre-dismissal|post-dismissal]"
 ---
 
 # /unfair-dismissal-screener
 
-1. Qualifying service test (s.108 ERA): two years continuous service, **unless** the dismissal falls within an automatically unfair category (no qualifying period required).
+This skill structures an analysis for a solicitor to verify. It does not determine whether a dismissal was fair — that is the Tribunal's call, on facts and witnesses this prompt never sees.
+
+1. Frame the qualifying service question (s.108 ERA): two years continuous service, **unless** the dismissal falls within an automatically unfair category (no qualifying period required).
 2. Identify the potentially fair reason advanced (s.98(2)): conduct, capability, redundancy, illegality, some other substantial reason. If none, s.98(1) — burden on employer to show fair reason.
-3. Apply the Burchell test (conduct cases): reasonable belief, reasonable investigation, dismissal within the band of reasonable responses.
-4. Apply Polkey (procedural fairness): if the dismissal was procedurally unfair, what was the chance it would have happened anyway? Reduces compensatory award.
-5. Apply ACAS Code: failure to follow can produce up to 25% uplift (s.207A TULR(C)A 1992).
-6. Output a risk score with the reasoning visible.
+3. Structure the Burchell analysis (conduct cases): reasonable belief, reasonable investigation, dismissal within the band of reasonable responses.
+4. Structure the Polkey question (procedural fairness): if the dismissal was procedurally unfair, what was the chance it would have happened anyway? Reduces compensatory award.
+5. Note the ACAS Code position: failure to follow can produce up to 25% uplift (s.207A TULR(C)A 1992).
+6. Output an indicative risk score with the reasoning visible — for a solicitor to check, not a prediction.
+
+Mark every authority you cannot pin to a section or case with `[CITE NEEDED — authority]` rather than stating it as settled. Verify each citation before relying on it.
 
 ---
 
@@ -25,7 +29,9 @@ Quick, structured fairness assessment. Pre-dismissal: helps an employer decide w
 
 Default rule: ordinary unfair dismissal requires **two years' continuous service** (effective from 6 April 2012 for employees who started on or after that date).
 
-**No qualifying period applies if** the dismissal is automatically unfair, including (non-exhaustive):
+**No qualifying period applies if** the dismissal is automatically unfair, including (non-exhaustive).
+
+The statute references below are a starting checklist, not authority. Verify each citation against the live source before relying on it, and mark any you cannot confirm `[CITE NEEDED — authority]`. Items turning on pending or recent legislation are marked `[SME VERIFY]`.
 
 | Category | Statute |
 |---|---|
@@ -42,7 +48,7 @@ Default rule: ordinary unfair dismissal requires **two years' continuous service
 | Jury service | s.98B ERA |
 | Discriminatory dismissal | EqA 2010 (which is a separate cause of action — but the dismissal is also "automatically unfair" in effect — plead both) |
 
-Plus the Labour government's 2024–25 Employment Rights Bill is expected to introduce day-one unfair dismissal rights subject to a statutory probation period. `[SME VERIFY — Employment Rights Act 2025 implementation date and probationary regime]`.
+`[SME VERIFY]` The Employment Rights Bill 2024–25 is expected to introduce day-one unfair dismissal rights subject to a statutory probation period — this is time-sensitive and may have changed. Confirm the current status, commencement date, and probationary regime before relying on it. `[SME VERIFY — Employment Rights Act 2025 implementation date and probationary regime]`.
 
 ## Potentially fair reasons (s.98(2) ERA)
 
@@ -94,13 +100,15 @@ ACAS Code compliance. Investigation, invitation, hearing, right to be accompanie
 
 ### Step 5 — Polkey + ACAS adjustments
 
-Estimate Polkey % and ACAS uplift. Multiply through to a risk-adjusted compensation range.
+Estimate Polkey % and ACAS uplift, and carry them through to an illustrative compensation range. Any arithmetic here (basic award, compensatory award, Polkey reduction, ACAS uplift) is illustrative only — recompute against current statutory caps and the week's-pay figure before quoting to a client.
 
 ### Step 6 — Output
 
-Structured risk score with the reasoning.
+An indicative risk score with the reasoning visible — for a solicitor to verify, not a prediction.
 
-## Output template
+## Output
+
+Produce these sections as the finished screen. Do not echo this template back, and do not invent facts to fill a section — if a fact is unknown, say so. Mark uncertainty inline as you go: `[CITE NEEDED — authority]` for any rule or case you cannot pin to a section or citation, `[SME VERIFY — point]` for time-sensitive, borderline, or solicitor-call items.
 
 # Unfair Dismissal Screen — [Employee name]
 
@@ -134,23 +142,25 @@ Structured risk score with the reasoning.
 - Decision in writing: [...]
 - Right of appeal: [...]
 
-## Risk score
+## Risk score (indicative)
 
-| Factor | Position | Weight |
-|---|---|---|
-| Substantive fairness | Strong / Borderline / Weak | |
-| Procedural fairness | Strong / Borderline / Weak | |
-| Polkey reduction estimate | [%] | |
-| ACAS uplift estimate | [%] | |
+| Factor | Position |
+|---|---|
+| Substantive fairness | Strong / Borderline / Weak |
+| Procedural fairness | Strong / Borderline / Weak |
+| Polkey reduction estimate | [%] |
+| ACAS uplift estimate | [%] |
 
-**Overall risk to employer: [Low / Medium / High]**
+**Overall risk to employer (indicative — for a solicitor to verify, not a prediction): [Low / Medium / High]**
 
-## Compensation range (if claim succeeds)
+## Compensation range (illustrative — recompute before quoting to a client)
+
+Figures below are illustrative working only. Recompute against the current statutory cap and week's-pay figure before relying on them. `[SME VERIFY — current statutory cap and week's pay]`
 
 - Basic award (s.119 ERA): £[X]
 - Compensatory award (s.123 ERA, capped per s.124): £[Y] — range reflecting Polkey
 - ACAS uplift: + [up to 25%]
-- Range: £[low] – £[high]
+- Illustrative range: £[low] – £[high]
 
 ## Recommended actions
 
@@ -162,7 +172,10 @@ Structured risk score with the reasoning.
 
 ## What this skill does not do
 
-- Decide. The screen is a structured aid. Counsel calls the strategic shot.
+- Determine fairness. Whether a dismissal was fair is the Tribunal's call on facts, witnesses, and evidence this prompt never sees. The screen structures the analysis; it does not decide it.
+- Predict the outcome. The risk score is indicative — a structured read for a solicitor to verify, not a calibrated probability or a forecast.
+- Give legal advice. This is a draft screen for solicitor review, not advice to any party. A qualified solicitor must check every citation, recompute every figure, and own the conclusion before it goes to a client.
+- Replace a formal opinion. It is a structured prompt for that conversation, not a substitute for it.
 - Quantify pension loss precisely.
 - Cover redundancy selection-criteria challenges in detail (separate skill territory).
-- Cover Scotland / NI.
+- Cover Scotland / Northern Ireland.

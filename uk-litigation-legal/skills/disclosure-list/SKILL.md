@@ -104,9 +104,13 @@ Plus the **Disclosure Statement** (signed personally — CPR 31.10) certifying t
 
 **PD 57AD — Disclosure Certificate**
 
-Signed by the party (not the solicitor) certifying the search complied with the order and disclosure obligations under the PD.
+Signed by the party (not the solicitor) certifying the search complied with the order and disclosure obligations under the PD. Like the CPR 31.10 statement, any draft Disclosure Certificate the skill produces is **scaffolding, not an executed certificate** — carry the same DRAFT banner across, do not present the certification as made, and the party must sign it personally only once the search has actually been performed.
 
-## Output template (CPR 31)
+## Output
+
+Produce the list using the sections below. Render it as the finished List of Documents — do not echo this template back, and do not invent documents, custodians, or sources to fill a section. If a part has nothing in it, say so. Every document listed must trace to a real input the user supplied; the skill scopes and drafts the list, it does not generate the documents that go in it.
+
+### Output template (CPR 31)
 
 # List of Documents — [Case name and claim number]
 
@@ -131,6 +135,8 @@ Signed by the party (not the solicitor) certifying the search complied with the 
 
 ## Disclosure Statement (CPR 31.10)
 
+> **DRAFT — NOT AN EXECUTED STATEMENT.** This is scaffolding for a Disclosure Statement, not a completed one. Before it can be filed: the statement must be reviewed; the search it describes must actually have been performed; and it must be signed **personally by the party** under CPR 31.10. Do not file as generated. Do not present the blanks as filled, and do not assert the search was carried out — only the signing party can certify that. Render this with the banner attached and the certification text shown as wording the party must adopt for themselves, not as a statement the model is making.
+
 I, [name], state:
 1. My address is [...]. I am [position].
 2. I have been authorised to make this disclosure statement on behalf of [party].
@@ -140,10 +146,10 @@ I, [name], state:
 6. I did not search for [excluded sources — eg paper archives older than 7 years, dormant servers] — give reasons.
 7. I certify I understand the duty to disclose and to the best of my knowledge I have carried it out.
 
-Signed: [party]
+Signed: [party — sign personally, CPR 31.10]
 Date: [date]
 
-## Output template (PD 57AD Disclosure Review Document, simplified)
+### Output template (PD 57AD Disclosure Review Document, simplified)
 
 # Disclosure Review Document — [Case]
 
@@ -175,6 +181,8 @@ Date: [date]
 
 ## What this skill does not do
 
-- Run the search. It scopes and lists.
-- Decide privilege. Counsel reviews flagged documents.
+- Run the search. It scopes and lists; the search itself happens outside the model and must actually be performed before any list or statement is certified.
+- Decide privilege. It flags candidates by description; counsel reviews every flagged document and makes the privilege call.
+- Certify anything. The Disclosure Statement (CPR 31.10) and Disclosure Certificate (PD 57AD) are signed personally by the party — the model drafts scaffolding, it does not make the certification.
 - Cover Scottish / NI procedure (Commission and Diligence; Schedule 1 RCS).
+- Give legal advice. This is a drafting aid that produces a draft for solicitor review. Nothing it generates should be filed as generated — verify the scope, the search, and the privilege calls with counsel before relying on or serving any output.
