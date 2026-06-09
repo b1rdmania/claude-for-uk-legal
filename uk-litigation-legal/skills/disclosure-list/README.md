@@ -1,8 +1,8 @@
 # disclosure-list
 
-Scopes a disclosure list and List of Documents for civil proceedings in England & Wales — and gets the regime right where it's genuinely easy to get wrong: the Disclosure Pilot under Practice Direction 57AD (now permanent in the Business and Property Courts) versus standard disclosure under CPR Part 31 everywhere else.
+Works out which documents you have to hand over to the other side in a civil case in England & Wales, and builds the formal list — getting right the bit that trips people up: which disclosure regime applies.
 
-For litigation juniors, in-house counsel, and small teams scoping disclosure without an in-house precedent bank. Ask a general tool for "a disclosure list" and it will usually default to old CPR 31 standard disclosure and miss PD 57AD and its Models A–E entirely — this one picks the regime, selects a model per issue, structures the Disclosure Review Document, and drafts the certificate as scaffolding for the party to sign personally.
+In the Business and Property Courts that's the Disclosure Pilot under Practice Direction 57AD (now permanent, with its Models A–E); everywhere else it's standard disclosure under CPR Part 31. Ask a general tool for "a disclosure list" and it'll usually default to old CPR 31 and miss PD 57AD entirely. For litigation juniors, in-house counsel, and small teams without a precedent bank: this picks the regime, selects a Model per issue, structures the Disclosure Review Document, and drafts the certificate as scaffolding for the party to sign personally.
 
 ## Install
 
