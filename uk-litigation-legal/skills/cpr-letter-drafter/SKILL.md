@@ -1,6 +1,6 @@
 ---
 name: cpr-letter-drafter
-description: Drafts a Letter Before Claim (England & Wales) styled to follow the Practice Direction on Pre-Action Conduct and Protocols, or a sector-specific pre-action protocol where one applies (debt, professional negligence, housing disrepair, personal injury, etc.) — verify compliance against the current protocol before sending. Use when the user says "draft an LBC", "letter before claim", "pre-action letter", "pre-action protocol", or needs to start the pre-action clock before issuing a civil claim.
+description: Drafts a Letter Before Claim (England & Wales) under the correct pre-action protocol — debt, professional negligence, housing disrepair, personal injury, or the default Practice Direction on Pre-Action Conduct — applying that protocol's specific timing and content rules (the 30-day debt window, the prof-neg preliminary-notice step) that a generic letter misses, and flagging the limitation date rather than asserting it. For litigation juniors, in-house counsel, and small firms drafting an LBC without a protocol-specific precedent to hand. Use when the user says "draft an LBC", "letter before claim", "pre-action letter", "pre-action protocol", or needs to start the pre-action clock before issuing a civil claim. Verify the current protocol before sending.
 argument-hint: "[--protocol=auto|pacc|debt|prof-neg|disrepair|pi|other]"
 ---
 
@@ -105,7 +105,7 @@ Use the relevant template.
 Identify documents to enclose. Limited disclosure at LBC stage; full disclosure later.
 
 ### Step 5 — ADR signal
-PACC and most protocols require parties to consider ADR. Stating willingness in the LBC is standard. Refusal to engage in ADR can be costs-penalised (Halsey v Milton Keynes NHS Trust `[CITE NEEDED — authority]`; the position was further calibrated so the court may now order ADR, Churchill v Merthyr Tydfil `[CITE NEEDED — authority]`). Verify both citations and the current ADR-costs position before relying on them.
+PACC and most protocols require parties to consider ADR. Stating willingness in the LBC is standard. Refusal to engage in ADR can be costs-penalised (Halsey v Milton Keynes General NHS Trust [2004] EWCA Civ 576); the position was recalibrated in Churchill v Merthyr Tydfil County Borough Council [2023] EWCA Civ 1416, where the Court of Appeal held a court may lawfully stay proceedings to require parties to engage in ADR. Confirm the current ADR-costs position before relying on it.
 
 ## Output template (PACC default)
 
@@ -176,7 +176,7 @@ Please provide a Letter of Response within [21 days / per protocol]. The respons
 
 ## 8. Costs
 
-If proceedings are issued and our client succeeds, costs will be sought under CPR Part 44. Our client reserves the right to make a CPR Part 36 offer, or a without-prejudice-save-as-to-costs (Calderbank `[CITE NEEDED — authority]`) offer, at any stage.
+If proceedings are issued and our client succeeds, costs will be sought under CPR Part 44. Our client reserves the right to make a CPR Part 36 offer, or a without-prejudice-save-as-to-costs (Calderbank v Calderbank [1976] Fam 93) offer, at any stage.
 
 Yours faithfully,
 

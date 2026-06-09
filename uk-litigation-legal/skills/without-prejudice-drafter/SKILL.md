@@ -1,6 +1,6 @@
 ---
 name: without-prejudice-drafter
-description: Drafts correspondence on the intended privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open — and flags the risk that the footing may not hold. Distinguishes the three, proposes the right one for the situation, and surfaces the exceptions to WP protection that frequently catch parties out (Unilever v Procter & Gamble exceptions). Use when the user asks to draft a WP letter, a Calderbank, a settlement letter, or wants to know whether material is likely protected from disclosure.
+description: Drafts settlement correspondence on the correct privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open — and warns where labelling a letter "without prejudice" won't actually protect it. Picks the right footing, drafts the finished letter, and surfaces the Unilever v Procter & Gamble exceptions that get WP material admitted despite the label — the traps a plain template won't flag. For juniors and in-house counsel drafting a settlement or Calderbank offer who need the footing right the first time. Use when the user asks to draft a WP letter, a Calderbank, a settlement letter, or wants to know whether material is likely protected from disclosure.
 argument-hint: "[--type=wp|wpsatc|open]"
 ---
 
@@ -33,11 +33,11 @@ Three conditions:
 2. The communication is **a genuine attempt to settle** that dispute.
 3. The parties intended the communication to be confidential.
 
-A letter labelled "without prejudice" that does not satisfy these conditions is not protected. A letter that satisfies them but is not labelled is still protected — the label is evidence of intention, but substance prevails `[CITE NEEDED — Rush & Tompkins v GLC [1989], verify proposition before relying]`.
+A letter labelled "without prejudice" that does not satisfy these conditions is not protected. A letter that satisfies them but is not labelled is still protected — the label is evidence of intention, but substance prevails (Rush & Tompkins Ltd v Greater London Council [1989] AC 1280).
 
 ## The Unilever exceptions (Unilever v Procter & Gamble [2000])
 
-WP protection is not absolute. `[CITE NEEDED — Unilever v Procter & Gamble [2000] EWCA Civ 11; verify the exception list and its current scope before relying — the categories below are illustrative, not a closed or settled set, and the courts have treated them as fact-sensitive.]` The court has admitted WP material in evidence in situations including the following. Do not over-extend these; treat anything outside a squarely-decided category as `[CITE NEEDED]` rather than asserting protection is lost:
+WP protection is not absolute (Unilever plc v Procter & Gamble Co [2000] 1 WLR 2436, [2000] EWCA Civ 11). The categories below are illustrative, not a closed or settled set — the courts treat them as fact-sensitive, so confirm the current scope before relying on any one of them. The court has admitted WP material in evidence in situations including the following. Do not over-extend these; treat anything outside a squarely-decided category as in need of verification rather than asserting protection is lost:
 
 1. The WP communications show the agreement was concluded — to prove or rebut existence/terms of the agreement.
 2. The communications are evidence of misrepresentation, fraud, or undue influence.
@@ -51,7 +51,7 @@ A letter discussing a settlement that also makes a threat or admits a crime is e
 
 ## Calderbank / WPSATC specifics
 
-The Calderbank offer `[CITE NEEDED — Calderbank v Calderbank [1976] Fam 93; verify before relying]` lets a party put a settlement on the table that the court will see on costs at the end. Mostly displaced by CPR Part 36 in the civil courts, but still alive where:
+The Calderbank offer (Calderbank v Calderbank [1976] Fam 93) lets a party put a settlement on the table that the court will see on costs at the end. Mostly displaced by CPR Part 36 in the civil courts, but still alive where:
 
 - The forum doesn't have Part 36 (Employment Tribunal — use a Calderbank / WPSATC offer instead).
 - The offer is on terms Part 36 cannot accommodate (mixed money and non-money relief; offers including a contribution; offers conditional on third-party action).

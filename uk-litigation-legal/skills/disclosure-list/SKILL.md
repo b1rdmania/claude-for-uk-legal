@@ -1,6 +1,6 @@
 ---
 name: disclosure-list
-description: Builds a disclosure list and List of Documents for civil proceedings in England & Wales — distinguishing between (a) the Disclosure Pilot regime now permanent under Practice Direction 57AD (Business and Property Courts) and (b) standard disclosure under CPR Part 31 elsewhere. Includes Models A–E selection guidance for PD 57AD, disclosure review document (DRD) structure, and the disclosure certificate. Use when the user says "disclosure list", "PD 57AD", "Model C", "extended disclosure", "List of Documents", "N265", or needs to scope what must be disclosed.
+description: Scopes a disclosure list and List of Documents for civil proceedings in England & Wales, getting the regime right where it's easy to get wrong — the Disclosure Pilot under Practice Direction 57AD (now permanent in the Business and Property Courts) versus standard disclosure under CPR Part 31 everywhere else, a distinction a general draft usually misses. Selects PD 57AD Extended Disclosure Models A–E per issue, structures the Disclosure Review Document, and drafts the certificate as scaffolding for the party to sign personally. For litigation juniors, in-house counsel, and small teams scoping disclosure without an in-house precedent bank. Use when the user says "disclosure list", "PD 57AD", "Model C", "extended disclosure", "List of Documents", "N265", or needs to scope what must be disclosed.
 argument-hint: "[--regime=pd57ad|cpr31] [--model=A|B|C|D|E]"
 ---
 

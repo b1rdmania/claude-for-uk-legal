@@ -1,6 +1,8 @@
 # without-prejudice-drafter
 
-Drafts settlement correspondence on the intended privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open — and flags the risk that the footing may not hold.
+Drafts settlement correspondence on the *right* privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open — and warns you where labelling a letter "without prejudice" won't actually protect it.
+
+For juniors and in-house counsel drafting a settlement or Calderbank offer who need the footing right the first time. It picks the correct footing, drafts the finished letter, and surfaces the Unilever v Procter & Gamble exceptions that get WP material admitted despite the label — the traps a plain template won't warn you about.
 
 ## Install
 
