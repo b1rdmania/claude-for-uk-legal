@@ -1,8 +1,8 @@
 # cpr-letter-drafter
 
-Drafts a Letter Before Claim (England & Wales) under the *right* pre-action protocol — debt, professional negligence, housing disrepair, personal injury, or the default Practice Direction on Pre-Action Conduct — and applies that protocol's specific timing and content rules instead of a generic letter.
+Writes the formal letter you send before suing someone in a civil case in England & Wales — the Letter Before Claim that starts the pre-action clock — under the *right* pre-action protocol for the claim.
 
-For litigation juniors, in-house counsel, and small firms who need a protocol-correct LBC without a precedent bank to copy from. It catches what a general draft misses — the 30-day debt-claim response window, the professional-negligence preliminary-notice-then-letter-of-claim sequence — and flags the limitation date for a solicitor to confirm rather than stating it as fact.
+Which protocol applies (debt, professional negligence, housing disrepair, personal injury, or the default Practice Direction on Pre-Action Conduct) changes the rules, and a generic letter misses them. For litigation juniors, in-house counsel, and small firms without a precedent bank to copy from: it catches what a general draft skips — the 30-day debt-claim response window, the professional-negligence preliminary-notice-then-letter-of-claim sequence — and flags the limitation date for a solicitor to confirm rather than stating it as fact.
 
 ## Install
 

@@ -1,8 +1,8 @@
 # without-prejudice-drafter
 
-Drafts settlement correspondence on the *right* privilege footing — without prejudice (WP), without prejudice save as to costs (WPSATC / Calderbank), or open — and warns you where labelling a letter "without prejudice" won't actually protect it.
+Writes a settlement letter on the *right* footing — and warns you when marking it "without prejudice" won't actually keep it out of court.
 
-For juniors and in-house counsel drafting a settlement or Calderbank offer who need the footing right the first time. It picks the correct footing, drafts the finished letter, and surfaces the Unilever v Procter & Gamble exceptions that get WP material admitted despite the label — the traps a plain template won't warn you about.
+A genuine settlement letter is normally protected, so the judge can't see it — but the label only works if the substance is a real attempt to settle, and even then there are exceptions. The skill picks the correct footing (without prejudice, without prejudice save as to costs / Calderbank, or open), drafts the finished letter, and surfaces the Unilever v Procter & Gamble exceptions that get WP material admitted despite the label — the traps a plain template won't warn you about. For juniors and in-house counsel who need the footing right the first time.
 
 ## Install
 
